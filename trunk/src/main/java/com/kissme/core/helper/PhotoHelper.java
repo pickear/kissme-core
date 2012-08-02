@@ -141,7 +141,6 @@ public class PhotoHelper {
 			// must dispose
 			g.dispose();
 
-			Files.split(dest.getName());
 			String format = Files.suffix(dest.getName());
 			ImageIO.write(destImage, StringUtils.isBlank(format) ? "jpg" : format, dest);
 		} catch (IOException e) {
