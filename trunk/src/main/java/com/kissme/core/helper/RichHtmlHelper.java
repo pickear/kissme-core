@@ -1,7 +1,7 @@
 package com.kissme.core.helper;
 
 import java.util.Collections;
-import java.util.List;
+import java.util.Set;
 
 import org.apache.commons.lang.StringUtils;
 import org.jsoup.Jsoup;
@@ -9,7 +9,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
 
 /**
  * 
@@ -18,19 +18,19 @@ import com.google.common.collect.Lists;
  */
 public final class RichHtmlHelper {
 	
-	public static List<String> populateJavascripts(String html){
+	public static Set<String> populateJavascripts(String html){
 
 		if (StringUtils.isBlank(html)) {
-			return Collections.emptyList();
+			return Collections.emptySet();
 		}
 
 		Document doc = Jsoup.parse(html);
-		Elements eles = doc.select("script[src][type$=text/javascript]");
+		Elements eles = doc.select("script[src$=js]");
 		if (eles.isEmpty()) {
-			return Collections.emptyList();
+			return Collections.emptySet();
 		}
 
-		List<String> javascripts = Lists.newLinkedList();
+		Set<String> javascripts = Sets.newHashSet();
 		for (Element ele : eles) {
 			javascripts.add(ele.attr("src"));
 		}
@@ -38,24 +38,24 @@ public final class RichHtmlHelper {
 		return javascripts;
 	}
 	
-	public static List<String> populateStylesheets(String html){
+	public static Set<String> populateStylesheets(String html){
 
 		if (StringUtils.isBlank(html)) {
-			return Collections.emptyList();
+			return Collections.emptySet();
 		}
 
 		Document doc = Jsoup.parse(html);
-		Elements eles = doc.select("link[href][type$=text/css]");
+		Elements eles = doc.select("link[href$=css]");
 		if (eles.isEmpty()) {
-			return Collections.emptyList();
+			return Collections.emptySet();
 		}
 
-		List<String> stylesheetes = Lists.newLinkedList();
+		Set<String> stylesheets = Sets.newHashSet();
 		for (Element ele : eles) {
-			stylesheetes.add(ele.attr("href"));
+			stylesheets.add(ele.attr("href"));
 		}
 
-		return stylesheetes;
+		return stylesheets;
 	}
 
 	/**
@@ -63,19 +63,19 @@ public final class RichHtmlHelper {
 	 * @param html
 	 * @return
 	 */
-	public static List<String> populatePhotos(String html) {
+	public static Set<String> populatePhotos(String html) {
 
 		if (StringUtils.isBlank(html)) {
-			return Collections.emptyList();
+			return Collections.emptySet();
 		}
 
 		Document doc = Jsoup.parse(html);
 		Elements eles = doc.select("img[src]");
 		if (eles.isEmpty()) {
-			return Collections.emptyList();
+			return Collections.emptySet();
 		}
 
-		List<String> photos = Lists.newLinkedList();
+		Set<String> photos = Sets.newHashSet();
 		for (Element ele : eles) {
 			photos.add(ele.attr("src"));
 		}
@@ -88,18 +88,18 @@ public final class RichHtmlHelper {
 	 * @param html
 	 * @return
 	 */
-	public static List<String> populateFlashes(String html) {
+	public static Set<String> populateFlashes(String html) {
 		if (StringUtils.isBlank(html)) {
-			return Collections.emptyList();
+			return Collections.emptySet();
 		}
 
 		Document doc = Jsoup.parse(html);
 		Elements eles = doc.select("embed[src][type$=flash]");
 		if (eles.isEmpty()) {
-			return Collections.emptyList();
+			return Collections.emptySet();
 		}
 
-		List<String> flashes = Lists.newLinkedList();
+		Set<String> flashes = Sets.newHashSet();
 		for (Element ele : eles) {
 			flashes.add(ele.attr("src"));
 		}
