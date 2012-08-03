@@ -19,7 +19,7 @@ import com.kissme.lang.file.FileCommand;
  * @author loudyn
  * 
  */
-public class ZipUncompressFileCommand implements FileCommand {
+public class UnzipFileCommand implements FileCommand {
 
 	private final File target;
 	private final File source;
@@ -30,7 +30,7 @@ public class ZipUncompressFileCommand implements FileCommand {
 	 * @param source
 	 * @param target
 	 */
-	public ZipUncompressFileCommand(File source, File target) {
+	public UnzipFileCommand(File source, File target) {
 		this(source, target, "GBK");
 	}
 
@@ -40,7 +40,7 @@ public class ZipUncompressFileCommand implements FileCommand {
 	 * @param target
 	 * @param encoding
 	 */
-	public ZipUncompressFileCommand(File source, File target, String encoding) {
+	public UnzipFileCommand(File source, File target, String encoding) {
 		this.source = source;
 		this.target = target;
 		this.encoding = encoding;
