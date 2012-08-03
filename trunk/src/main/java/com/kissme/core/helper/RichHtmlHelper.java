@@ -17,6 +17,46 @@ import com.google.common.collect.Lists;
  * 
  */
 public final class RichHtmlHelper {
+	
+	public static List<String> populateJavascripts(String html){
+
+		if (StringUtils.isBlank(html)) {
+			return Collections.emptyList();
+		}
+
+		Document doc = Jsoup.parse(html);
+		Elements eles = doc.select("script[src][type$=text/javascript]");
+		if (eles.isEmpty()) {
+			return Collections.emptyList();
+		}
+
+		List<String> javascripts = Lists.newLinkedList();
+		for (Element ele : eles) {
+			javascripts.add(ele.attr("src"));
+		}
+
+		return javascripts;
+	}
+	
+	public static List<String> populateStylesheets(String html){
+
+		if (StringUtils.isBlank(html)) {
+			return Collections.emptyList();
+		}
+
+		Document doc = Jsoup.parse(html);
+		Elements eles = doc.select("link[href][type$=text/css]");
+		if (eles.isEmpty()) {
+			return Collections.emptyList();
+		}
+
+		List<String> stylesheetes = Lists.newLinkedList();
+		for (Element ele : eles) {
+			stylesheetes.add(ele.attr("href"));
+		}
+
+		return stylesheetes;
+	}
 
 	/**
 	 * 
