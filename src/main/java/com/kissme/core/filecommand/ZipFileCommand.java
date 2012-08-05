@@ -7,11 +7,13 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
 
 import org.apache.commons.compress.archivers.ArchiveStreamFactory;
 import org.apache.commons.compress.archivers.zip.ZipArchiveEntry;
 import org.apache.commons.compress.archivers.zip.ZipArchiveOutputStream;
 
+import com.google.common.collect.Lists;
 import com.kissme.lang.IOs;
 import com.kissme.lang.Lang;
 import com.kissme.lang.file.FileCommand;
@@ -44,28 +46,34 @@ public class ZipFileCommand implements FileCommand {
 	}
 
 	public void execute() {
+
+		List<Throwable> throwables = Lists.newLinkedList();
 		ZipArchiveOutputStream zos = null;
 
 		try {
 
 			zos = (ZipArchiveOutputStream) new ArchiveStreamFactory().createArchiveOutputStream("zip", new FileOutputStream(target));
 			zos.setEncoding(encoding);
-			doInternalArchive(source, zos, "");
+			doInternalArchive(source, zos, "", throwables);
 
 		} catch (Exception e) {
-			throw Lang.uncheck(e);
+			throwables.add(e);
 		} finally {
 			IOs.freeQuietly(zos);
 		}
+
+		if (!throwables.isEmpty()) {
+			throw Lang.comboThrow(throwables);
+		}
 	}
 
-	private void doInternalArchive(File source, ZipArchiveOutputStream zos, String entryName) throws IOException {
+	private void doInternalArchive(File source, ZipArchiveOutputStream zos, String entryName, List<Throwable> throwables) throws IOException {
 		if (source.isDirectory() && !source.isHidden()) {
 
 			zos.putArchiveEntry(new ZipArchiveEntry(entryName + separator));
 
 			for (File child : source.listFiles()) {
-				doInternalArchive(child, zos, entryName + separator + child.getName());
+				doInternalArchive(child, zos, entryName + separator + child.getName(), throwables);
 			}
 
 		}
@@ -86,7 +94,9 @@ public class ZipFileCommand implements FileCommand {
 				IOs.piping(in, zos);
 				zos.closeArchiveEntry();
 
-			} catch (Exception ignore) {} finally {
+			} catch (Exception e) {
+				throwables.add(e);
+			} finally {
 				IOs.freeQuietly(in);
 			}
 		}
