@@ -5,11 +5,13 @@ import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Enumeration;
+import java.util.List;
 
 import org.apache.commons.compress.archivers.zip.ZipArchiveEntry;
 import org.apache.commons.compress.archivers.zip.ZipFile;
 import org.apache.commons.io.FileUtils;
 
+import com.google.common.collect.Lists;
 import com.kissme.lang.IOs;
 import com.kissme.lang.Lang;
 import com.kissme.lang.file.FileCommand;
@@ -52,6 +54,8 @@ public class UnzipFileCommand implements FileCommand {
 	}
 
 	private void doInternalArchive(File source, File target, String encoding) {
+
+		List<Throwable> throwables = Lists.newLinkedList();
 		try {
 
 			ZipFile sourceAsZip = new ZipFile(source, encoding);
@@ -74,13 +78,19 @@ public class UnzipFileCommand implements FileCommand {
 					out = new FileOutputStream(new File(target, entry.getName()));
 					IOs.piping(in, out);
 
-				} catch (Exception ignore) {} finally {
+				} catch (Exception e) {
+					throwables.add(e);
+				} finally {
 					IOs.freeQuietly(in, out);
 				}
 			}
 
 		} catch (Exception e) {
-			throw Lang.uncheck(e);
+			throwables.add(e);
+		}
+
+		if (!throwables.isEmpty()) {
+			throw Lang.comboThrow(throwables);
 		}
 
 	}
