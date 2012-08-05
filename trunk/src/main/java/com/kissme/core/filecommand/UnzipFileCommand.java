@@ -74,7 +74,7 @@ public class UnzipFileCommand implements FileCommand {
 					out = new FileOutputStream(new File(target, entry.getName()));
 					IOs.piping(in, out);
 
-				} catch (Exception e) {
+				} catch (Exception ignore) {} finally {
 					IOs.freeQuietly(in, out);
 				}
 			}
