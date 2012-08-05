@@ -86,7 +86,7 @@ public class ZipFileCommand implements FileCommand {
 				IOs.piping(in, zos);
 				zos.closeArchiveEntry();
 
-			} catch (Exception e) {
+			} catch (Exception ignore) {} finally {
 				IOs.freeQuietly(in);
 			}
 		}
