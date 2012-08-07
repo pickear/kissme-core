@@ -21,7 +21,7 @@ public abstract class CrudControllerSupport<ID, T> extends ControllerSupport {
 
 	@SuppressWarnings("unchecked")
 	public CrudControllerSupport() {
-		Class<?>[] genericsTypes = Ghost.me(getClass()).genericsTypes();
+		Class<?>[] genericsTypes = Ghost.me(getClass()).genericsTypes(CrudControllerSupport.class);
 		idClazz = (Class<ID>) genericsTypes[0];
 		entityClazz = (Class<T>) genericsTypes[1];
 	}

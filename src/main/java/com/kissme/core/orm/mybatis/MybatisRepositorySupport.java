@@ -25,7 +25,7 @@ public abstract class MybatisRepositorySupport<ID, T> extends SqlSessionDaoSuppo
 
 	@SuppressWarnings("unchecked")
 	protected MybatisRepositorySupport() {
-		Class<?>[] genericsTypes = Ghost.me(getClass()).genericsTypes();
+		Class<?>[] genericsTypes = Ghost.me(getClass()).genericsTypes(MybatisRepositorySupport.class);
 		this.idClazz = (Class<ID>) genericsTypes[0];
 		this.entityClazz = (Class<T>) genericsTypes[1];
 	}
