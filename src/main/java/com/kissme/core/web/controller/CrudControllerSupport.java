@@ -6,7 +6,6 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 
 import com.google.common.base.Objects;
-import com.kissme.lang.Ghost;
 import com.kissme.lang.Preconditions;
 
 /**
@@ -15,33 +14,7 @@ import com.kissme.lang.Preconditions;
  * 
  */
 public abstract class CrudControllerSupport<ID, T> extends ControllerSupport {
-
-	private final Class<ID> idClazz;
-	private final Class<T> entityClazz;
-
-	@SuppressWarnings("unchecked")
-	public CrudControllerSupport() {
-		Class<?>[] genericsTypes = Ghost.me(getClass()).genericsTypes(CrudControllerSupport.class);
-		idClazz = (Class<ID>) genericsTypes[0];
-		entityClazz = (Class<T>) genericsTypes[1];
-	}
-
-	/**
-	 * 
-	 * @return
-	 */
-	public Class<ID> getIdClazz() {
-		return idClazz;
-	}
-
-	/**
-	 * 
-	 * @return
-	 */
-	public Class<T> getEntityClazz() {
-		return entityClazz;
-	}
-
+	
 	/**
 	 * 
 	 * @param one
