@@ -5,7 +5,7 @@ package com.kissme.core.orm.datasource;
  * @author loudyn
  * 
  */
-public final class DataSourceRouter {
+public final class DynamicDataSourceRouter {
 	private final static ThreadLocal<String> ROUTE_HOLDER = new ThreadLocal<String>();
 
 	/**
