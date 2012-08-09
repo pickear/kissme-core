@@ -30,4 +30,6 @@ public final class DynamicDataSourceRouter {
 	public static void clearSpecifiedRoute() {
 		ROUTE_HOLDER.set(null);
 	}
+
+	private DynamicDataSourceRouter() {}
 }
