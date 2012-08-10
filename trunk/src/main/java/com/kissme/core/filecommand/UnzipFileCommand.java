@@ -63,9 +63,10 @@ public class UnzipFileCommand implements FileCommand {
 			for (Enumeration<ZipArchiveEntry> entries = sourceAsZip.getEntries(); entries.hasMoreElements();) {
 
 				ZipArchiveEntry entry = entries.nextElement();
-
+				File entryfile = new File(target, entry.getName());
+				
 				if (entry.isDirectory()) {
-					FileUtils.forceMkdir(new File(target, entry.getName()));
+					FileUtils.forceMkdir(entryfile);
 					continue;
 				}
 
@@ -75,7 +76,7 @@ public class UnzipFileCommand implements FileCommand {
 				try {
 
 					in = sourceAsZip.getInputStream(entry);
-					out = new FileOutputStream(new File(target, entry.getName()));
+					out = new FileOutputStream(entryfile);
 					IOs.piping(in, out);
 
 				} catch (Exception e) {
