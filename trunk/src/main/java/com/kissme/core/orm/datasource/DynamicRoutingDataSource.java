@@ -7,7 +7,7 @@ import org.springframework.jdbc.datasource.lookup.AbstractRoutingDataSource;
  * @author loudyn
  *
  */
-public class DynamicRoutingDataSource extends AbstractRoutingDataSource {
+public final class DynamicRoutingDataSource extends AbstractRoutingDataSource {
 
 	@Override
 	protected Object determineCurrentLookupKey() {
