@@ -1,5 +1,7 @@
 package com.kissme.core.domain.event;
 
+import java.util.EventListener;
+
 import com.google.common.eventbus.Subscribe;
 import com.kissme.core.domain.event.LifecycleEvent.LifecycleEventType;
 import com.kissme.core.domain.monitor.Monitoring;
@@ -9,7 +11,7 @@ import com.kissme.core.domain.monitor.Monitoring;
  * @author loudyn
  * 
  */
-public abstract class LifecycleEventHandler {
+public abstract class LifecycleEventHandler implements EventListener {
 
 	/**
 	 * 
