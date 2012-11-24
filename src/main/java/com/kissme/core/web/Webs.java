@@ -113,6 +113,7 @@ public class Webs {
 		ZIP("application/zip"),
 		TXT("text/plain"),
 		JS("application/x-javascript"),
+		JSON("application/json"),
 
 		JPG("image/jpeg"),
 		PNG("image/png"),

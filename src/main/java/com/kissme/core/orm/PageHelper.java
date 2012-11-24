@@ -25,6 +25,9 @@ public class PageHelper {
 
 	private static final String[] SQL_META = new String[] { " ", "'", "select", "or", "and", "union", "exec", "-- ", "#", ";" };
 	private static final WordHelper SQL_SAFE_GUARDER = new WordHelper() {
+		{
+			addAll(Arrays.asList(SQL_META));
+		}
 
 		@Override
 		protected void afterFilter(List<String> hitWords, String text, String replacement) {
@@ -33,7 +36,7 @@ public class PageHelper {
 			}
 		}
 
-	}.addAll(Arrays.asList(SQL_META));
+	};
 
 	/**
 	 * 
@@ -111,7 +114,7 @@ public class PageHelper {
 	 */
 	private static String buildDistinctCountSql(String sql) {
 		String selectItems = findDistinctSelectItems(sql);
-		String fromHql = buildFromHql(sql);
+		String fromHql = buildFromSql(sql);
 		return String.format("select count(distinct %s) %s", selectItems, fromHql);
 	}
 
@@ -132,7 +135,7 @@ public class PageHelper {
 	 * @return
 	 */
 	private static String buildCountSql(String sql) {
-		String fromHql = buildFromHql(sql);
+		String fromHql = buildFromSql(sql);
 		return String.format("select count(*) %s", fromHql);
 	}
 
@@ -140,7 +143,7 @@ public class PageHelper {
 	 * @param sql
 	 * @return
 	 */
-	private static String buildFromHql(String sql) {
+	private static String buildFromSql(String sql) {
 		String fromHql = sql;
 		if (fromHql.indexOf("from") == -1) {
 			fromHql = StringUtils.substringAfter(fromHql, "FROM");
