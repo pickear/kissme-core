@@ -27,6 +27,16 @@ public class Webs {
 
 	/**
 	 * 
+	 * @param request
+	 * @return
+	 */
+	public static boolean isAjax(HttpServletRequest request) {
+		String requestedWith = request.getHeader("X-Requested-With");
+		return isAjax(requestedWith);
+	}
+
+	/**
+	 * 
 	 * @param requestedWith
 	 * @return
 	 */
