@@ -1,6 +1,5 @@
 package com.kissme.core.web.filter;
 
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -11,7 +10,7 @@ import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
-import com.kissme.core.annotation.Immutable;
+import com.kissme.lang.annotation.Immutable;
 
 /**
  * 
@@ -119,6 +118,5 @@ public class FlashModel {
 		info, success, warning, error
 	}
 
-	private FlashModel() {
-	}
+	private FlashModel() {}
 }
